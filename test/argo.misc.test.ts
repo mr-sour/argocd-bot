@@ -4,6 +4,8 @@ import { Probot } from "probot"
 
 const ArgocdBot = require("..")
 
+var nock = require('nock');
+
 // test fixtures
 const payloadPr1 = require("./fixtures/issue_comment.created.pr1.json")
 const payloadPr1Closed = require("./fixtures/pull_request.closed.pr1.json")

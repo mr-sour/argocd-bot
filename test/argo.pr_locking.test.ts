@@ -2,6 +2,8 @@ import * as sinon from "sinon"
 import * as nock from "nock"
 import { Probot } from "probot"
 
+var nock = require('nock');
+
 const ArgocdBot = require("..")
 import { PrLock } from "../src/singleton-pr-lock"
 

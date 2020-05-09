@@ -362,7 +362,8 @@ ${syncRes.stdout}
     }
 
     private async handleDiff(jsonArgoCDApps) {
-        const cloneUrl = "https://" + this.argoConfig.getGithubToken() + ":x-oauth-basic@" + this.argoConfig.getGithubRepo();
+
+        const cloneUrl = "https://" + this.argoConfig.getGithubToken() + ":x-oauth-basic@" + this.appContext.payload.repository.html_url;
         const prNumber = this.appContext.payload.issue.number;
         const curBranch = await ArgoBot.getCurrentBranch(this.appContext, prNumber);
         const repoDir = "cloned_repos/pr_" + prNumber;

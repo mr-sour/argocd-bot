@@ -16,6 +16,7 @@
     "manifests": "kustomize build ./deployment/base > deployment/install.yaml"
   },
   "dependencies": {
+    "@types/bunyan": "^1.8.6",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.13.4",
     "node-fetch": "^2.3.0",
