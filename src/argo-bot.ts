@@ -242,10 +242,12 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
     private async attemptLock() {
         const prTitle = this.appContext.payload.issue.title;
         const prNumber = this.appContext.payload.issue.number;
+        const projectName = this.appContext.payload.repository.full_name;
+
 
         // this is a singleton
         const prLock = new PrLock();
-        if (prLock.tryLock(prTitle, prNumber) === false) {
+        if (prLock.tryLock(prTitle, prNumber, projectName) === false) {
             const lockMessage = prLock.getLockInfo() +  "; is holding the lock, please merge PR or comment with \`" + BotCommand + " unlock\` to release lock";
             await ArgoBot.respondWithComment(this.appContext, lockMessage);
             return false;

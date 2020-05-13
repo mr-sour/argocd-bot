@@ -6,6 +6,7 @@ export class SingletonPrLock {
     private activePrName: string;
     private activePrNumber: number;
     private locked: boolean;
+    private repositories: Array<string>;
 
     constructor() {
         if (typeof SingletonPrLock.instance === "object") {
@@ -15,24 +16,39 @@ export class SingletonPrLock {
         this.activePrName = "";
         this.activePrNumber = -1;
         this.locked = false;
+        this.repositories = []
 
         SingletonPrLock.instance = this;
         return this;
     }
 
-    public tryLock(prName, prNumber) {
-        // if no one is holding the lock, obtain it
-        if (this.locked === false) {
-            this.activePrName = prName;
-            this.activePrNumber = prNumber;
-            this.locked = true;
-            return true;
-        }
-        // if a PR is attempting to lock and it already holds the lock, allow it to proceed
-        if (this.locked === true && this.activePrNumber === prNumber) {
-            return true;
-        }
-        return false;
+    public tryLock(prName, prNumber, projectName) {
+      const repositoryExists = this.repositories.find(repository => repository === projectName);
+      if (!repositoryExists) {
+        this.activePrName = prName;
+        this.activePrNumber = prNumber;
+        this.repositories.push(projectName)
+        return true
+      }
+
+      if (repositoryExists && this.activePrNumber === prNumber) {
+        return true;
+      }
+      
+      return false;
+
+        // // if no one is holding the lock, obtain it
+        // if (this.locked === false) {
+        //     this.activePrName = prName;
+        //     this.activePrNumber = prNumber;
+        //     this.locked = true;
+        //     return true;
+        // }
+        // // if a PR is attempting to lock and it already holds the lock, allow it to proceed
+        // if (this.locked === true && this.activePrNumber === prNumber) {
+        //     return true;
+        // }
+        // return false;
     }
 
     public getPrNumber() {
