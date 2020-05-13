@@ -6,7 +6,7 @@ export class SingletonPrLock {
     private activePrName: string;
     private activePrNumber: number;
     private locked: boolean;
-    private repositories: Array<string>;
+    private projects: Record<string, string | number>[];
 
     constructor() {
         if (typeof SingletonPrLock.instance === "object") {
@@ -16,18 +16,28 @@ export class SingletonPrLock {
         this.activePrName = "";
         this.activePrNumber = -1;
         this.locked = false;
-        this.repositories = [];
+        this.projects = [];
+
 
         SingletonPrLock.instance = this;
         return this;
     }
 
     public tryLock(prName, prNumber, projectName) {
-      const repositoryExists = this.repositories.find(repository => repository === projectName);
+      const repositoryExists = this.projects
+        .find(({ name, pr }) => name === projectName && pr === prNumber);
+
       if (!repositoryExists) {
         this.activePrName = prName;
         this.activePrNumber = prNumber;
-        this.repositories.push(projectName);
+
+
+        const project = {
+          name: projectName,
+          pr: prNumber
+        }
+
+        this.projects.push(project);
         return true;
       }
 
