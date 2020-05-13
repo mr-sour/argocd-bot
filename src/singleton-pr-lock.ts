@@ -3,8 +3,6 @@ export class SingletonPrLock {
 
     private static instance;
 
-    private activePrName: string;
-    private activePrNumber: number;
     private locked: boolean;
     private projects: Record<string, string | number>[];
 
@@ -13,8 +11,6 @@ export class SingletonPrLock {
             return SingletonPrLock.instance;
         }
 
-        this.activePrName = "";
-        this.activePrNumber = -1;
         this.locked = false;
         this.projects = [];
 
@@ -25,40 +21,46 @@ export class SingletonPrLock {
 
     public tryLock(prName, prNumber, projectName) {
       const repositoryExists = this.projects
-        .find(({ name, pr }) => name === projectName && pr === prNumber);
+        .find(({ name, activePrNumber }) => 
+          name === projectName && activePrNumber === prNumber
+        );
 
       if (!repositoryExists) {
+<<<<<<< HEAD
+=======
         this.activePrName = prName;
         this.activePrNumber = prNumber;
 
 
+>>>>>>> c2c80b6cb97ab4c20599b78bd08bbd2152e2c6db
         const project = {
           name: projectName,
-          pr: prNumber
+          activePrNumber: prNumber,
+          activePrName: prName
         }
 
         this.projects.push(project);
         return true;
       }
 
-      if (repositoryExists && this.activePrNumber === prNumber) {
+      if (repositoryExists) {
         return true;
       }
 
       return false;
 
-        // // if no one is holding the lock, obtain it
-        // if (this.locked === false) {
-        //     this.activePrName = prName;
-        //     this.activePrNumber = prNumber;
-        //     this.locked = true;
-        //     return true;
-        // }
-        // // if a PR is attempting to lock and it already holds the lock, allow it to proceed
-        // if (this.locked === true && this.activePrNumber === prNumber) {
-        //     return true;
-        // }
-        // return false;
+      // // if no one is holding the lock, obtain it
+      // if (this.locked === false) {
+      //     this.activePrName = prName;
+      //     this.activePrNumber = prNumber;
+      //     this.locked = true;
+      //     return true;
+      // }
+      // // if a PR is attempting to lock and it already holds the lock, allow it to proceed
+      // if (this.locked === true && this.activePrNumber === prNumber) {
+      //     return true;
+      // }
+      // return false;
     }
 
     public getPrNumber() {
