@@ -26,13 +26,6 @@ export class SingletonPrLock {
         );
 
       if (!repositoryExists) {
-<<<<<<< HEAD
-=======
-        this.activePrName = prName;
-        this.activePrNumber = prNumber;
-
-
->>>>>>> c2c80b6cb97ab4c20599b78bd08bbd2152e2c6db
         const project = {
           name: projectName,
           activePrNumber: prNumber,
