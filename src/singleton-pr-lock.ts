@@ -56,27 +56,37 @@ export class SingletonPrLock {
       // return false;
     }
 
-    public getPrNumber() {
-        return this.activePrNumber;
+    public getPrNumber(projectName) {
+        const currentProject: Record<string, any>  = this.projects.find(repository => repository.name === projectName);
+        return currentProject[0].activePrNumber;
     }
 
-    public getLockInfo() {
-        if (this.locked === false) {
+    public getLockInfo(projectName) {
+        const currentProject: Record<string, any>  = this.projects.find(repository => repository.name === projectName);
+        if (!currentProject[0].activePrNumber) {
             throw new Error("Lock is not being held");
         }
-        return "PR: `" + this.activePrName + "` #" + this.activePrNumber;
+        return "PR: `" + currentProject[0].activePrName + "` #" + currentProject[0].activePrNumber;
     }
 
-    public unlock(prNumber) {
-        if (this.activePrNumber === prNumber) {
-            this.locked = false;
+    public unlock(projectName,prNumber) {
+        const currentProject: Record<string, any>  = this.projects.find(repository => repository.name === projectName);
+        if (currentProject[0].activePrNumber === prNumber) {
+            const arrayIndex = this.projects.indexOf(currentProject);
+            //remove the item from array using the index
+            this.projects.slice(arrayIndex, 1);
             return true;
         }
+
         return false;
     }
 
-    public isLocked() {
-        return this.locked;
+    public isLocked(projectName) {
+        const currentProject: Record<string, any>  = this.projects.find(repository => repository.name === projectName);
+        if (currentProject[0].activePrNumber) {
+            return this.locked;
+        }
+        
     }
 }
 
