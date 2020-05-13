@@ -23,14 +23,16 @@ export class SingletonPrLock {
     }
 
     public tryLock(prName, prNumber, projectName) {
-      const repositoryExists = this.projects.find(({ name }) => name === projectName);
+      const repositoryExists = this.projects
+        .find(({ name, pr }) => name === projectName && pr === prNumber);
+
       if (!repositoryExists) {
         this.activePrName = prName;
         this.activePrNumber = prNumber;
 
         const project = {
           name: projectName,
-          prNumber
+          pr: prNumber
         }
 
         this.projects.push(project);
