@@ -18,6 +18,7 @@ export class SingletonPrLock {
         this.locked = false;
         this.projects = [];
 
+
         SingletonPrLock.instance = this;
         return this;
     }
@@ -29,6 +30,7 @@ export class SingletonPrLock {
       if (!repositoryExists) {
         this.activePrName = prName;
         this.activePrNumber = prNumber;
+
 
         const project = {
           name: projectName,
@@ -42,7 +44,7 @@ export class SingletonPrLock {
       if (repositoryExists && this.activePrNumber === prNumber) {
         return true;
       }
-      
+
       return false;
 
         // // if no one is holding the lock, obtain it

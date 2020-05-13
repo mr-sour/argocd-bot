@@ -244,7 +244,6 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
         const prNumber = this.appContext.payload.issue.number;
         const projectName = this.appContext.payload.repository.full_name;
 
-
         // this is a singleton
         const prLock = new PrLock();
         if (prLock.tryLock(prTitle, prNumber, projectName) === false) {
