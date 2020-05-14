@@ -30,11 +30,6 @@ spec:
               name: argocd-bot-secret
               key: APP_ID
         # if using github.com, this is not needed
-        - name: GHE_HOST
-          valueFrom:
-            secretKeyRef:
-              name: argocd-bot-secret
-              key: GHE_HOST
         - name: GITHUB_REPO
           valueFrom:
             secretKeyRef:
