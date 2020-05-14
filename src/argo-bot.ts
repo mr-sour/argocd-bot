@@ -247,7 +247,7 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
         // this is a singleton
         const prLock = new PrLock();
         if (prLock.tryLock(prTitle, prNumber, projectName) === false) {
-            const lockMessage = prLock.getLockInfo() +  "; is holding the lock, please merge PR or comment with \`" + BotCommand + " unlock\` to release lock";
+            const lockMessage = prLock.getLockInfo(projectName) +  "; is holding the lock, please merge PR or comment with \`" + BotCommand + " unlock\` to release lock";
             await ArgoBot.respondWithComment(this.appContext, lockMessage);
             return false;
         }
@@ -258,24 +258,25 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
     private async handleUnlockAction() {
         const prNumber = this.appContext.payload.issue.number;
         const prLock = new PrLock();
-
+        const projectName = this.appContext.payload.repository.full_name;
         // if user wants to unlock, and lock is held by current PR, unlock
-        if (prLock.getPrNumber() === prNumber) {
+        if (prLock.getPrNumber(projectName) === prNumber) {
             this.appContext.log("received unlock request, unlocking...");
-            prLock.unlock(prNumber);
+            prLock.unlock(projectName,prNumber);
             return await ArgoBot.respondWithComment(this.appContext, "Lock has been released!");
         } else {
             // notify user to unlock from the PR that owns the lock
             this.appContext.log("received unlock request from the wrong PR");
-            const lockMessage = prLock.getLockInfo() +  "; is holding the lock, please comment on that PR to unlock";
+            const lockMessage = prLock.getLockInfo(projectName) +  "; is holding the lock, please comment on that PR to unlock";
             return await ArgoBot.respondWithComment(this.appContext, lockMessage);
         }
     }
 
     private async handleClosedPR() {
         const prNumber = this.appContext.payload.issue.number;
+        const projectName = this.appContext.payload.repository.full_name;
         const prLock = new PrLock();
-        prLock.unlock(prNumber);
+        prLock.unlock(projectName,prNumber);
     }
 
     private async respondWithError(error) {
