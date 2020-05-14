@@ -40,4 +40,4 @@ USER argocd
 ENV KUBECTL_EXTERNAL_DIFF=/usr/local/bin/diff_helper
 
 # run npm as argocd user
-RUN npm install && npm run build && npm run test
+RUN npm install && npm run build 

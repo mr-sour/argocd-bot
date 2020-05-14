@@ -4,7 +4,7 @@ export class SingletonPrLock {
     private static instance;
 
     private locked: boolean;
-    private projects: Record<string, string | number>[];
+    private projects: Array<Record<string, number | string>>;
 
     constructor() {
         if (typeof SingletonPrLock.instance === "object") {
@@ -24,9 +24,9 @@ export class SingletonPrLock {
 
       if (!repositoryExists) {
         const project = {
-          name: projectName,
           activePrName: prName,
           activePrNumber: prNumber,
+          name: projectName,
         };
 
         this.projects.push(project);

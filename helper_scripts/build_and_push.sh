@@ -4,5 +4,5 @@ set -e
 
 version=0.4
 docker build -f Dockerfile -t argocd-bot .
-docker tag argocd-bot marcb1/argocd-bot:v${version} && docker tag argocd-bot marcb1/argocd-bot:latest
+docker tag argocd-bot mrsour/argocd-bot:v${version} && docker tag argocd-bot mrsour/argocd-bot:latest
 docker push mrsour/argocd-bot:v${version} && docker push mrsour/argocd-bot:latest
