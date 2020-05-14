@@ -262,7 +262,7 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
         // if user wants to unlock, and lock is held by current PR, unlock
         if (prLock.getPrNumber(projectName) === prNumber) {
             this.appContext.log("received unlock request, unlocking...");
-            prLock.unlock(projectName,prNumber);
+            prLock.unlock(projectName, prNumber);
             return await ArgoBot.respondWithComment(this.appContext, "Lock has been released!");
         } else {
             // notify user to unlock from the PR that owns the lock
@@ -276,7 +276,7 @@ ${BotActions.Rollback}: ${BotHelp.Rollback}
         const prNumber = this.appContext.payload.issue.number;
         const projectName = this.appContext.payload.repository.full_name;
         const prLock = new PrLock();
-        prLock.unlock(projectName,prNumber);
+        prLock.unlock(projectName, prNumber);
     }
 
     private async respondWithError(error) {
