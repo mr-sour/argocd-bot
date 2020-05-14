@@ -16,11 +16,11 @@ const DEFAULT_CONFIG = {
 
 async function handlePrClosed(context, config) {
     const prNumber = context.payload.pull_request.number;
-
+    const projectName = context.payload.repository.full_name;
     context.log("handlePrClosed, pr#" + prNumber);
 
     const lock = new PrLock();
-    const unlockStatus = lock.unlock(prNumber);
+    const unlockStatus = lock.unlock(projectName, prNumber);
     context.log("handlePrClosed, unlockStatus=" + unlockStatus);
 }
 
