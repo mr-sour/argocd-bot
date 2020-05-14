@@ -16,7 +16,7 @@ spec:
       containers:
       - name: argocd-bot
         command: [npm, start]
-        image: marcb1/argocd-bot:latest
+        image: mrsour/argocd-bot:latest
         env:
         - name: NODE_TLS_REJECT_UNAUTHORIZED
           value: "0"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export $(cat .env | xargs -L1)
 
-kubectl create secret generic argocd-bot-secret \
+kubectl create secret generic -o yaml --dry-run argocd-bot-secret \
     --from-literal=APP_ID=$APP_ID \
     --from-literal=GHE_HOST=$GHE_HOST \
     --from-literal=GITHUB_REPO=$GITHUB_REPO \
