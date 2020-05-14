@@ -14,23 +14,20 @@ export class SingletonPrLock {
         this.locked = false;
         this.projects = [];
 
-
         SingletonPrLock.instance = this;
         return this;
     }
 
     public tryLock(prName, prNumber, projectName) {
       const repositoryExists = this.projects
-        .find(({ name, activePrNumber }) => 
-          name === projectName && activePrNumber === prNumber
-        );
+        .find(({ name, activePrNumber }) => name === projectName && activePrNumber === prNumber);
 
       if (!repositoryExists) {
         const project = {
           name: projectName,
+          activePrName: prName,
           activePrNumber: prNumber,
-          activePrName: prName
-        }
+        };
 
         this.projects.push(project);
         return true;
@@ -69,11 +66,11 @@ export class SingletonPrLock {
         return "PR: `" + currentProject[0].activePrName + "` #" + currentProject[0].activePrNumber;
     }
 
-    public unlock(projectName,prNumber) {
+    public unlock(projectName, prNumber) {
         const currentProject: Record<string, any>  = this.projects.find(repository => repository.name === projectName);
         if (currentProject[0].activePrNumber === prNumber) {
             const arrayIndex = this.projects.indexOf(currentProject);
-            //remove the item from array using the index
+            // remove the item from array using the index
             this.projects.slice(arrayIndex, 1);
             return true;
         }
@@ -86,7 +83,7 @@ export class SingletonPrLock {
         if (currentProject[0].activePrNumber) {
             return this.locked;
         }
-        
+
     }
 }
 
