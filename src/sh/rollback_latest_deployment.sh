@@ -10,7 +10,7 @@ function usage_and_exit() {
 
 function view_deployments() {
     local app_name=${1}
-    argocd app history ${app_name} --plaintext
+    argocd app history ${app_name} --plaintext --grpc-web
 }
 
 if [[ ${1} == "--dry-run" || ${1} == "-d" ]]; then
@@ -46,5 +46,5 @@ if [[ ${dry_run} = true ]]; then
     echo "${before_latest}"
 else
     roll=$(echo $before_latest | awk '{print $1}')
-    argocd app rollback ${app_name} ${roll} --plaintext
+    argocd app rollback ${app_name} ${roll} --plaintext --grpc-web
 fi

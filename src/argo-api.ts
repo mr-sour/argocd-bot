@@ -29,7 +29,7 @@ export class ArgoAPI {
     }
 
     public async fetchAllAutoSyncApps() {
-        const url =  this.serverIP + "/api/v1/applications?fields=" + this.fetchAutoSyncAppsFilter;
+        const url = "http://" + this.serverIP + "/api/v1/applications?fields=" + this.fetchAutoSyncAppsFilter;
         const responseJson = await this.fetchHttp(url, this.token);
 
         if (Object.keys(responseJson).length === 0 || !("items" in responseJson)) {
@@ -48,7 +48,7 @@ export class ArgoAPI {
     }
 
     public async fetchAppsWithDirectory(dir) {
-        const url = this.serverIP + "/api/v1/applications?fields=" + this.fetchAllAppsFilter;
+        const url = "http://" + this.serverIP + "/api/v1/applications?fields=" + this.fetchAllAppsFilter;
         const responseJson = await this.fetchHttp(url, this.token);
         const jsonItems = responseJson["items"];
 
@@ -76,7 +76,7 @@ export class ArgoAPI {
      }
 
     public async fetchDirForAppWithName(appName) {
-        const url = this.serverIP + "/api/v1/applications/" + appName;
+        const url = "http://" + this.serverIP + "/api/v1/applications/" + appName;
         const responseJson = await this.fetchHttp(url, this.token);
 
         if (!responseJson.hasOwnProperty("metadata") || !responseJson.hasOwnProperty("spec") || !responseJson["spec"].hasOwnProperty("source") ||
@@ -87,7 +87,7 @@ export class ArgoAPI {
     }
 
     private async fetchAllApplications() {
-        const url = this.serverIP + "/api/v1/applications?fields=" + this.fetchAllAppsFilter;
+        const url = "http://" + this.serverIP + "/api/v1/applications?fields=" + this.fetchAllAppsFilter;
         const responseJson = await this.fetchHttp(url, this.token);
         return responseJson;
     }

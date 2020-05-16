@@ -16,4 +16,4 @@ if [[ -z "${app_name}" || -z "${branch}" ]]; then
 fi
 
 # 10 second timeout
-argocd app sync ${app_name} --revision=${branch} --plaintext && argocd app wait ${app_name} --operation --timeout=10 --plaintext
+argocd app sync ${app_name} --revision=${branch} --plaintext --grpc-web && argocd app wait ${app_name} --operation --timeout=10 --plaintext --grpc-web

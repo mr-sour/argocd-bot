@@ -411,7 +411,7 @@ ${syncRes.stdout}
                 return await this.respondWithError(errString);
             }
             if (res.stdout === "") {
-                this.appContext.log("no diff for app=", appName);
+                // found an empty diff skip
                 continue;
             }
             this.appContext.log("Found diff for app=", appName);

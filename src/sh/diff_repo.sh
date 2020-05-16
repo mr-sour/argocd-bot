@@ -16,5 +16,5 @@ dir="${3}"
 if [[ -z "${repo_path}" || -z "${app_name}" || -z "${dir}" ]]; then
     usage_and_exit
 fi
-
-cd ${repo_path} && cd * && argocd app diff ${app_name} --local=${dir} --plaintext
+#need to make grpc-web optional also add --server feild
+cd ${repo_path} && cd * && argocd app diff ${app_name} --local=${dir} --plaintext --grpc-web

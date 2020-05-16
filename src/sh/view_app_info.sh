@@ -14,4 +14,4 @@ if [[ -z "${app_name}" ]]; then
     usage_and_exit
 fi
 
-argocd app get ${app_name} --plaintext
+argocd app get ${app_name} --plaintext --grpc-web
